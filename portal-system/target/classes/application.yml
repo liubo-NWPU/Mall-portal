@@ -1,0 +1,54 @@
+spring:
+  profiles:
+    active: pro #默认为开发环境
+
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+jwt:
+  tokenHeader: Authorization #JWT存储的请求头
+  secret: mall-portal-secret #JWT加解密使用的密钥
+  expiration: 86400 #JWT的超期限时间(60*60*24*1)  1天
+  tokenHead: 'Bearer_'  #JWT负载中开头
+
+secure:
+  ignored:
+    urls: #安全路径白名单
+      - /swagger-ui.html
+      - /swagger-resources/**
+      - /swagger/**
+      - /**/v2/api-docs
+      - /**/*.js
+      - /**/*.css
+      - /**/*.png
+      - /**/*.ico
+      - /webjars/springfox-swagger-ui/**
+      - /druid/**
+      - /actuator/**
+      - /api/login/**
+      - /api/paper/list
+      - /api/paper/getPaperDetail
+      - /images/**
+      - /files/**
+      - /api/sample/**
+      - /api/kaptcha/**
+      - /api/comment/getCommentsList
+
+
+# 自定义redis key
+redis:
+  database: mall
+  key:
+    authCode: 'ums:authCode'
+    orderId: 'oms:orderId'
+    member: 'ums:member'
+  expire:
+    authCode: 90 # 验证码超期时间  90秒
+    common: 86400 # 24小时 24*60*60
+    sampleCenter: 604800  # 7天
+
+
+

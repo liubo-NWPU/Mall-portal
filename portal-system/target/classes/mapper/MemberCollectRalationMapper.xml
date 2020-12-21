@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.website.business.mapper.MemberCollectRelationMapper">
+    <select id="select" resultType="com.ai.website.business.entity.MemberCollectRelation">
+        select * from member_collect_relation
+        where username=#{username} and paper_id=#{paperId}
+    </select>
+
+    <insert id="insert">
+        insert into member_collect_relation(username,paper_id)
+        values (#{username},#{paperId})
+    </insert>
+
+    <select id="selectNum" parameterType="java.lang.String">
+        select count(*)
+        from member_collect_relation
+        where username=#{username}
+    </select>
+
+    <select id="selectList" resultType="com.ai.website.business.entity.Paper">
+        select p.id,p.author,p.type,p.title,p.tags,p.create_time
+        from member_collect_relation mcr
+        LEFT JOIN paper p on mcr.paper_id=p.id
+        where mcr.username=#{username}
+    </select>
+</mapper>

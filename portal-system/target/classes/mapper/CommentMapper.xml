@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ai.website.business.mapper.CommentMapper">
+    <resultMap id="BaseResultMap" type="com.ai.website.business.entity.Comment">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="critic_name" jdbcType="VARCHAR" property="criticName"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="like_num" jdbcType="INTEGER" property="likeNum"/>
+        <result column="unlike_num" jdbcType="INTEGER" property="unlikeNum"/>
+        <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.ai.website.business.entity.Comment" useGeneratedKeys="true" keyProperty="id">
+        insert into comment(critic_name,content,create_time,like_num,unlike_num)
+        values (#{criticName},#{content},#{createTime},#{likeNum},#{unlikeNum})
+    </insert>
+
+    <update id="addLikeNum" parameterType="java.lang.Long">
+        update comment
+        set like_num=like_num+1
+        where id=#{commentId}
+    </update>
+
+    <update id="addUnLikeNum" parameterType="java.lang.Long">
+        update comment
+        set unlike_num=unlike_num+1
+        where id=#{commentId}
+    </update>
+</mapper>
