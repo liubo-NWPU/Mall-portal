@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: pro #默认为开发环境
+    active: dev #默认为开发环境
 
 mybatis:
   mapper-locations:
@@ -36,6 +36,7 @@ secure:
       - /api/sample/**
       - /api/kaptcha/**
       - /api/comment/getCommentsList
+      - /api/pageView/**
 
 
 # 自定义redis key

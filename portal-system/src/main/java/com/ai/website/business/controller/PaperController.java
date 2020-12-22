@@ -16,6 +16,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,7 +50,7 @@ public class PaperController {
 
     @ApiOperation(value = "文章发布")
     @RequestMapping(value = "/release", method = RequestMethod.POST)
-    public CommonResult release(@RequestBody PaperDto paperDto) {
+    public CommonResult release(@Validated @RequestBody PaperDto paperDto) {
         Paper paper = paperService.create(paperDto);
         if (paper == null) {
             return CommonResult.failed("发布失败");

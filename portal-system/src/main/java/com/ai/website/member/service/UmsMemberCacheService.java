@@ -49,4 +49,8 @@ public interface UmsMemberCacheService {
     Set getAttachFile(String username);
 
     void delAttachFile(String username);
+
+    void setPageViewNum(String key, String requestIp);
+
+    Long getPageViewNum(String key);
 }

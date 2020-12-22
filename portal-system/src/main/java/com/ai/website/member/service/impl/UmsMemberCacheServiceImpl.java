@@ -84,14 +84,14 @@ public class UmsMemberCacheServiceImpl implements UmsMemberCacheService {
     }
 
     @Override
-    public void setVerificationCode(String sessionId, String authCode) {
-        String key = sessionId;
+    public void setVerificationCode(String requestIp, String authCode) {
+        String key = requestIp;
         redisService.set(key, authCode, REDIS_EXPIRE_AUTH_CODE);
     }
 
     @Override
-    public Object getVerificationCode(String sessionId) {
-        String key = sessionId;
+    public Object getVerificationCode(String requestIp) {
+        String key = requestIp;
         Object o = redisService.get(key);
         return redisService.get(key);
     }
@@ -107,5 +107,15 @@ public class UmsMemberCacheServiceImpl implements UmsMemberCacheService {
         String key = username + ":" + "attachFile";
         Set<Object> attachFileSet = redisService.sMembers(key);
         return attachFileSet;
+    }
+
+    @Override
+    public void setPageViewNum(String key, String requestIp) {
+        redisService.sAdd(key, requestIp);
+    }
+
+    @Override
+    public Long getPageViewNum(String key) {
+        return redisService.sSize(key);
     }
 }

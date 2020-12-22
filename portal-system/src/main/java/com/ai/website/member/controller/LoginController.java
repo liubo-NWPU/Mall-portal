@@ -98,6 +98,7 @@ public class LoginController {
             httpServletResponse.setHeader("Expires", "-1");
             httpServletResponse.setContentType("image/jpeg");
             String createText = defaultKaptcha.createText();
+            //登录ip为key，验证码为value
             String requestIp = RequestUtil.getRequestIp(httpServletRequest);
             memberCacheService.setVerificationCode(requestIp, createText);
             ServletOutputStream responseOutputStream = httpServletResponse.getOutputStream();

@@ -12,6 +12,7 @@ import com.ai.website.common.api.CommonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public class CommentController {
 
     @ApiOperation(value = "发布评论")
     @RequestMapping(value = "/release", method = RequestMethod.POST)
-    public CommonResult release(@RequestBody CommentDto commentDto,
+    public CommonResult release(@Validated @RequestBody CommentDto commentDto,
                                 @RequestParam Long paperId) {
         Comment comment = commentService.create(commentDto);
         if (comment == null) {
