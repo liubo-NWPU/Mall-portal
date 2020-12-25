@@ -38,6 +38,7 @@ logging:
     root: info
     com.ai.website: debug
 
+
 logstash:
   host: logstash
 
@@ -52,5 +53,6 @@ web:
   image-path: /images/
   #上传附件地址
   file-path: /files/
+
 
 
