@@ -24,14 +24,9 @@
         select id,author,type,title,tags,read_num, create_time,top
         from paper
         where title like #{keyword}
-        ORDER BY create_time DESC
+        order by case when top='true' then 1 end,create_time desc
     </select>
 
-    <select id="selectAll"  resultMap="BaseResultMap">
-        select id,author,type,title,tags,read_num, create_time,top
-        from paper
-        ORDER BY create_time DESC
-    </select>
 
     <select id="selectAllById" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select * from paper where id=#{paperId}

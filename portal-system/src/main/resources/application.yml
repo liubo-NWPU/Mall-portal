@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: pro #默认为开发环境
+    active: dev #默认为开发环境
 
 mybatis:
   mapper-locations:
@@ -48,6 +48,9 @@ redis:
   expire:
     authCode: 90 # 验证码超期时间  90秒
     common: 86400 # 24小时 24*60*60
+
+attachfile:
+  spilt: '=!@#%'
 
 
 

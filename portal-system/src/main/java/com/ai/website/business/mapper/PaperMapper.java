@@ -7,11 +7,8 @@ import java.util.List;
 public interface PaperMapper {
     int insert(Paper paper);
 
-    //分页显示列表
+    //显示列表
     List<Paper> selectByList(String keyword);
-
-    //不分页 全查
-    List<Paper> selectAll();
 
     //进入详情页
     Paper selectAllById(Long paperId);

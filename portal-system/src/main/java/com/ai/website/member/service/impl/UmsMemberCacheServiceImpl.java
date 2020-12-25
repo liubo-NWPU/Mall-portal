@@ -29,7 +29,6 @@ public class UmsMemberCacheServiceImpl implements UmsMemberCacheService {
     private String REDIS_KEY_AUTH_CODE;
 
 
-
     @Override
     public void delAttachFile(String username) {
         String key = username + ":" + REDIS_KEY_ATTACH_FILE;
@@ -61,6 +60,12 @@ public class UmsMemberCacheServiceImpl implements UmsMemberCacheService {
         String key = username + ":" + REDIS_KEY_ATTACH_FILE;
         Set<Object> attachFileSet = redisService.sMembers(key);
         return attachFileSet;
+    }
+
+    @Override
+    public Long cacelUpload(String username, String fileUrl) {
+        String key = username + ":" + REDIS_KEY_ATTACH_FILE;
+        return redisService.sRemove(key, fileUrl);
     }
 
     @Override

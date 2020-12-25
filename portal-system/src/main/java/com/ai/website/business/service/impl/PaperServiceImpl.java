@@ -15,6 +15,7 @@ import com.ai.website.member.service.UmsMemberService;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -23,6 +24,9 @@ import java.util.Set;
 
 @Service
 public class PaperServiceImpl implements PaperService {
+
+    @Value("${attachfile.spilt}")
+    private String ATTACH_FILE_SPILT;
 
     @Autowired
     private PaperMapper paperMapper;
@@ -62,14 +66,16 @@ public class PaperServiceImpl implements PaperService {
         }
         //关联文章id与附件地址
         Set attachFiles = umsMemberCacheService.getAttachFile(username);
-        for (Object attachFile : attachFiles) {
-            String path = String.valueOf(attachFile);
-            String[] split = path.split("=!@#%");
-            PaperAttachRelation paperAttachRelation=new PaperAttachRelation();
-            paperAttachRelation.setPaperId(paper.getId());
-            paperAttachRelation.setFileName(split[0]);
-            paperAttachRelation.setFileUrl(split[1]);
-            paperAttachRelationMapper.insert(paperAttachRelation);
+        if(attachFiles.size()!=0){
+            for (Object attachFile : attachFiles) {
+                String path = String.valueOf(attachFile);
+                String[] split = path.split(ATTACH_FILE_SPILT);
+                PaperAttachRelation paperAttachRelation=new PaperAttachRelation();
+                paperAttachRelation.setPaperId(paper.getId());
+                paperAttachRelation.setFileName(split[0]);
+                paperAttachRelation.setFileUrl(split[1]);
+                paperAttachRelationMapper.insert(paperAttachRelation);
+            }
         }
         //删除缓存附件地址
         umsMemberCacheService.delAttachFile(username);
@@ -78,7 +84,7 @@ public class PaperServiceImpl implements PaperService {
         return paper;
     }
 
-    //分页显示所有文章列表
+    //分页 显示所有文章列表
     @Override
     public List<Paper> list(String keyword, Integer pageSize, Integer pageNum) {
         PageHelper.startPage(pageNum, pageSize);
@@ -90,15 +96,16 @@ public class PaperServiceImpl implements PaperService {
         return papers;
     }
 
-    @Override
-    public List<Paper> listAll() {
-        List<Paper> papers = paperMapper.selectAll();
-        for (Paper paper : papers) {
-            int commentsNum = getCommentsNum(paper.getId());
-            paper.setCommentNum(commentsNum);
-        }
-        return papers;
-    }
+//    //不分页 显示所有文章列表
+//    @Override
+//    public List<Paper> listAll(String keyword) {
+//        List<Paper> papers = paperMapper.selectByList("%" + keyword.trim() + "%");
+//        for (Paper paper : papers) {
+//            int commentsNum = getCommentsNum(paper.getId());
+//            paper.setCommentNum(commentsNum);
+//        }
+//        return papers;
+//    }
 
     //获取文章的评论数
     public int getCommentsNum(Long paperId) {

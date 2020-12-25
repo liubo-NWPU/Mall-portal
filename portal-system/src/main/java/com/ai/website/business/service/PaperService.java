@@ -28,6 +28,4 @@ public interface PaperService {
 
     int createCollect(String username, Long paperId);
 
-    List<Paper> listAll();
-
 }

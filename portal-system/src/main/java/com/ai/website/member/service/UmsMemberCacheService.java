@@ -25,4 +25,6 @@ public interface UmsMemberCacheService {
     void setPageViewNum(String key, String requestIp);
 
     Long getPageViewNum(String key);
+
+    Long cacelUpload(String username, String fileUrl);
 }
